@@ -25,25 +25,25 @@
         <div class="form-group row">
             <label for="email" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-4">
-                <input required name="Feedback[email]" type="email" class="form-control" id="email" placeholder="Email" maxlength="70">
+                <input required name="email" type="email" class="form-control" id="email" placeholder="Email" maxlength="70">
             </div>
         </div>
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-4">
-                <input required name="Feedback[name]" type="text" class="form-control" id="name" placeholder="Name" maxlength="70">
+                <input required name="name" type="text" class="form-control" id="name" placeholder="Name" maxlength="70">
             </div>
         </div>
         <div class="form-group row">
             <label for="phone" class="col-sm-2 col-form-label">Phone</label>
             <div class="col-sm-4">
-                <input required name="Feedback[phone]" type="tel" class="form-control" id="phone" placeholder="Phone" maxlength="20" >
+                <input required name="phone" type="tel" class="form-control" id="phone" placeholder="Phone" maxlength="20" >
             </div>
         </div>
         <div class="form-group row">
             <label for="text" class="col-sm-2 col-form-label">Text</label>
             <div class="col-sm-4">
-                <textarea required name="Feedback[text]" class="form-control" id="text" placeholder="Text" maxlength="255"></textarea>
+                <textarea required name="text" class="form-control" id="text" placeholder="Text" maxlength="255"></textarea>
             </div>
         </div>
         <div class="form-group row">

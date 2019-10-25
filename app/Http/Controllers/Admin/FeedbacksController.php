@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Feedback;
+use App\Http\Requests\FeedbackGuestRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,13 +24,17 @@ class FeedbacksController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param FeedbackGuestRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(FeedbackGuestRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Feedback::create($validated);
+
+        return redirect()->route('home')
+            ->with('success','Feedback created successfully.');
     }
 
     /**

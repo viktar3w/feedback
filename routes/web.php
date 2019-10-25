@@ -30,7 +30,7 @@ Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
 ], function () {
-    Route::get('feedbacks', 'FeedbacksController@index')->name('feedbacks.index')->middleware('signed');
+    Route::get('/', 'FeedbacksController@index')->name('feedbacks.index')->middleware('signed');
     Route::delete('feedbacks/{id}', 'FeedbacksController@destroy')->name('feedbacks.destroy')->where(['id'=>'[0-9]+'])->middleware('signed');
     Route::post('feedbacks/{id}', 'FeedbacksController@update')->name('feedbacks.update')->where(['id'=>'[0-9]+'])->middleware('signed');
     Route::get('feedbacks/{id}', 'FeedbacksController@show')->name('feedbacks.view')->where(['id'=>'[0-9]+'])->middleware('signed');
