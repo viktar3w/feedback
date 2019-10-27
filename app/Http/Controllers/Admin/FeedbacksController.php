@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Feedback;
+use App\Models\Feedback;
 use App\Http\Requests\FeedbackGuestRequest;
+use App\Services\FeedbackService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,10 +17,10 @@ class FeedbacksController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedback::latest()->paginate(Feedback::QUANTITY);
+        $feedbacks = Feedback::latest()->paginate(FeedbackService::QUANTITY);
         return view('admin.feedbacks.index',[
             'feedbacks' => $feedbacks
-        ])->with('i', (request()->input('page', 1) - 1) * Feedback::QUANTITY);
+        ])->with('i', (request()->input('page', 1) - 1) * FeedbackService::QUANTITY);
     }
 
     /**
@@ -40,7 +41,7 @@ class FeedbacksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Feedback  $feedback
+     * @param  \App\Models\Feedback  $feedback
      * @return \Illuminate\Http\Response
      */
     public function show(Feedback $feedback)
@@ -51,19 +52,22 @@ class FeedbacksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Feedback  $feedback
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Feedback $feedback)
+    public function edit(int $id)
     {
-        //
+        $feedback = Feedback::find($id);
+        return view('admin.feedbacks.edit',[
+            'feedback' => $feedback
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Feedback  $feedback
+     * @param  \App\Models\Feedback  $feedback
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Feedback $feedback)
@@ -74,7 +78,7 @@ class FeedbacksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Feedback  $feedback
+     * @param  \App\Models\Feedback  $feedback
      * @return \Illuminate\Http\Response
      */
     public function destroy(Feedback $feedback)
