@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <form action="{{ route('feedbacks.update',['id'=>$feedback->id]) }}"
+    <form action="{{ route('feedback.update',['id'=>$feedback->id]) }}"
           method="POST">
         @csrf
         <div class="form-group row">

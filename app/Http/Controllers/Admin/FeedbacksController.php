@@ -17,7 +17,9 @@ class FeedbacksController extends Controller
      */
     public function index()
     {
-        $feedbacks = Feedback::latest()->paginate(FeedbackService::QUANTITY);
+        $feedbacks = Feedback::latest()
+            ->paginate(FeedbackService::QUANTITY);
+
         return view('admin.feedbacks.index',[
             'feedbacks' => $feedbacks
         ])->with('i', (request()->input('page', 1) - 1) * FeedbackService::QUANTITY);
@@ -41,12 +43,18 @@ class FeedbacksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Feedback  $feedback
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Feedback $feedback)
+    public function show(int $id)
     {
-        //
+        $feedback = Feedback::find($id);
+        if (!$feedback) {
+            return redirect()->route('feedback.index');
+        }
+        return view('admin.feedbacks.show', [
+            'feedback' => $feedback
+        ]);
     }
 
     /**
@@ -58,6 +66,9 @@ class FeedbacksController extends Controller
     public function edit(int $id)
     {
         $feedback = Feedback::find($id);
+        if (!$feedback) {
+            return redirect()->route('feedback.index');
+        }
         return view('admin.feedbacks.edit',[
             'feedback' => $feedback
         ]);

@@ -13,15 +13,23 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        \Illuminate\Support\Facades\DB::statement("
+        CREATE TABLE `users` ( 
+            `id` BigInt( 20 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+            `name` VarChar( 70 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+            `email` VarChar( 70 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+            `email_verified_at` Timestamp NULL,
+            `password` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+            `remember_token` VarChar( 100 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+            `created_at` Timestamp NULL,
+            `updated_at` Timestamp NULL,
+            PRIMARY KEY ( `id` ),
+            CONSTRAINT `users_email_unique` UNIQUE( `email` ) )
+        CHARACTER SET = utf8mb4
+        COLLATE = utf8mb4_unicode_ci
+        ENGINE = InnoDB
+        AUTO_INCREMENT = 1;
+        ");
     }
 
     /**
@@ -31,6 +39,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        \Illuminate\Support\Facades\DB::statement('DROP TABLE IF EXISTS `users`;');
     }
 }
