@@ -18,7 +18,8 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    #{{ $feedback->id }}
+                    {{ $feedback->name }}
+                    (#{{ $feedback->id }})
                 </li>
             </ol>
         </nav>
@@ -67,7 +68,7 @@
                         {{$feedback->text}}
                     </td>
                     <td>
-                        {{\App\Services\FeedbackService::getStatusesLabel()[$feedback->status]}}
+                        {{App\Services\FeedbackService::getStatusesLabel()[$feedback->status ?? 0] ?? ''}}
                     </td>
                 </tr>
                 </tbody>

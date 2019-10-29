@@ -20,9 +20,8 @@ class FeedbacksController extends Controller
         $feedbacks = Feedback::latest()
             ->paginate(FeedbackService::QUANTITY);
 
-        return view('admin.feedbacks.index',[
-            'feedbacks' => $feedbacks
-        ])->with('i', (request()->input('page', 1) - 1) * FeedbackService::QUANTITY);
+        return view('admin.feedbacks.index', compact('feedbacks'))
+            ->with('i', (request()->input('page', 1) - 1) * FeedbackService::QUANTITY);
     }
 
     /**
@@ -52,9 +51,7 @@ class FeedbacksController extends Controller
         if (!$feedback) {
             return redirect()->route('feedback.index');
         }
-        return view('admin.feedbacks.show', [
-            'feedback' => $feedback
-        ]);
+        return view('admin.feedbacks.show', compact('feedback'));
     }
 
     /**
@@ -69,9 +66,7 @@ class FeedbacksController extends Controller
         if (!$feedback) {
             return redirect()->route('feedback.index');
         }
-        return view('admin.feedbacks.edit',[
-            'feedback' => $feedback
-        ]);
+        return view('admin.feedbacks.edit',compact('feedback'));
     }
 
     /**

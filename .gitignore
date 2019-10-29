@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/.idea
 .env
 .env.backup
 .phpunit.result.cache
@@ -10,8 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-composer.lock
+./composer.lock
 .phpstorm.meta.php
 _ide_helper.php
-.idea
-package-lock.json
+./package-lock.json
