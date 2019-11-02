@@ -12,8 +12,23 @@
 */
 
 
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
+
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+]);
+
+Route::get('/', 'HomeController@index')->name('home');
+
 Route::post('feedbacks', 'Admin\FeedbacksController@store')
     ->name('feedback.store');
+Route::get('feedbacks', function () {
+    abort(404);
+});
 
 Route::group([
     'prefix' => 'admin',
@@ -39,15 +54,3 @@ Route::group([
         ->where(['id' => '[0-9]+'])
         ->middleware('auth');
 });
-
-Route::get('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-});
-
-Auth::routes([
-    'register' => false,
-    'reset' => false,
-]);
-
-Route::get('/', 'HomeController@index')->name('home');

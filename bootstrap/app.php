@@ -11,7 +11,7 @@
 |
 */
 ini_set('xdebug.max_nesting_level', 120);
-define('LARAVEL_START', microtime(true));
+defined('LARAVEL_START') or define('LARAVEL_START', microtime(true));
 
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)

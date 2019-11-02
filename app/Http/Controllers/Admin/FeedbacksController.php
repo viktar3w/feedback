@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\FeedbackAdminRequest;
 use App\Models\Feedback;
 use App\Http\Requests\FeedbackGuestRequest;
 use App\Services\FeedbackService;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class FeedbacksController extends Controller
 {
@@ -31,9 +30,7 @@ class FeedbacksController extends Controller
      */
     public function store(FeedbackGuestRequest $request)
     {
-        $validated = $request->validated();
-
-        Feedback::create($validated);
+        Feedback::create($request->input());
 
         return redirect()->route('home')
             ->with('success','Feedback created successfully.');
@@ -64,7 +61,7 @@ class FeedbacksController extends Controller
     {
         $feedback = Feedback::find($id);
         if (!$feedback) {
-            return redirect()->route('feedback.index');
+            return redirect()->route('feedback.index',[],301);
         }
         return view('admin.feedbacks.edit',compact('feedback'));
     }
@@ -72,13 +69,27 @@ class FeedbacksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Feedback  $feedback
+     * @param  FeedbackAdminRequest  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feedback $feedback)
+    public function update(FeedbackAdminRequest $request, int $id)
     {
-        //
+        $feedback = Feedback::find($id);
+        if (!$feedback) {
+            return back(301)
+                ->with('error',__("Feedback with Key №{$id} not found"))
+                ->withInput();
+        }
+        $result = $feedback
+            ->fill($request->input())
+            ->save();
+        if ($result) {
+            return back()
+                ->with('success',__("Feedback with Key №{$id} success updated"));
+        }
+        return back()
+            ->with('error',__("Feedback with Key №{$id} didn't update"));
     }
 
     /**

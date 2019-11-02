@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Services\FeedbackService;
 use Illuminate\Foundation\Http\FormRequest;
 
-class FeedbackGuestRequest extends FormRequest
+class FeedbackAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,6 +29,7 @@ class FeedbackGuestRequest extends FormRequest
             'name' => 'required|max:70|min:3',
             'phone' => 'required|max:20|min:7',
             'text' => 'required|max:255|min:8',
+            'status' => 'required|in:' . implode(',',FeedbackService::getStatuses())
         ];
     }
 }

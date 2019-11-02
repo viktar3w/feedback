@@ -19,9 +19,9 @@
     <div id="app">
         @include('layouts.header-nav')
         <main class="py-4 container">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
+            @if (session('success') || session('error'))
+                <div class="alert @if(session('success')) alert-success @else alert-error @endif">
+                    {{ session('success') ?? session('error') }}
                 </div>
             @endif
             @yield('content')

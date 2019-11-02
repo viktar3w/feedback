@@ -26,4 +26,16 @@ class FeedbackService
             1 => 'Active',
         ];
     }
+
+    /**
+     * Get list all statuses
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_ACTIVE,
+            self:: STATUS_DISABLED
+        ];
+    }
 }
