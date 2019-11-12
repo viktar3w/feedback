@@ -1,5 +1,5 @@
 <?php
-/**@var \App\Models\Feedback[] $feedbacks**/
+/**@var \App\Models\Feedback[] $paginator**/
 ?>
 @extends('layouts.app')
 @section('content')
@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($feedbacks as $feedback)
+            @foreach ($paginator as $feedback)
                 <tr>
                     <td>
                         {{$feedback->id}}
@@ -71,5 +71,5 @@
             </tbody>
         </table>
     </div>
-    {{ $feedbacks->links() }}
+    {{ $paginator->links() }}
 @endsection
