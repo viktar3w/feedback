@@ -110,11 +110,11 @@ class FeedbacksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Feedback $feedback
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Feedback $feedback)
+    public function destroy(int $id)
     {
-        //
+        dd(request()->all(),$id);
     }
 }

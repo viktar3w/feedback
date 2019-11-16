@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Feedback;
+use App\Observers\FeedbackObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Schema::defaultStringLength(191);
+        Feedback::observe(FeedbackObserver::class);
     }
 }

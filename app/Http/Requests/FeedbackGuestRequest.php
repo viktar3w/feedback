@@ -13,7 +13,7 @@ class FeedbackGuestRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return true;
     }
 
     /**
@@ -26,7 +26,16 @@ class FeedbackGuestRequest extends FormRequest
         return [
             'email' => 'required|email|max:70',
             'name' => 'required|max:70|min:3',
-            'phone' => 'required|max:20|min:7',
+            'phone' => [
+                'required',
+                function ($attribute, $value,$fault) {
+                    if (!preg_match('|^\+[0-9]+$|',$value)) {
+                        return false;
+                    }
+                },
+                'max:20',
+                'min:7'
+            ],
             'text' => 'required|max:255|min:8',
         ];
     }

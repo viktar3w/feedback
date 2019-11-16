@@ -7,9 +7,10 @@ use App\Models\Feedback as Model;
 
 /**
  * Class FeedbackRepository
+ *
+ * @package App\Repositories
  * @method Model startCondition(): Model
  * @property Model model
- * @package App\Repositories
  */
 class FeedbackRepository extends MainRepository
 {

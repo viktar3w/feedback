@@ -11,6 +11,7 @@ use App\Models\Feedback;
  */
 class FeedbackService
 {
+    public const DEFAULT_USER = 0;
     public const QUANTITY = 6;
     public const STATUS_ACTIVE = 1;
     public const STATUS_DISABLED = 0;
