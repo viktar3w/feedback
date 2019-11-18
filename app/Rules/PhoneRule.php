@@ -25,7 +25,10 @@ class PhoneRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        if (!preg_match('|^\+[0-9]+$|',$value)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -35,6 +38,6 @@ class PhoneRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return __('Phone is invalid');
     }
 }

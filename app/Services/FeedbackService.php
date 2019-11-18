@@ -15,6 +15,9 @@ class FeedbackService
     public const QUANTITY = 6;
     public const STATUS_ACTIVE = 1;
     public const STATUS_DISABLED = 0;
+    public const ACTION_DESTROY = 'feedback.destroy';
+    public const ACTION_UPDATE = 'feedback.update';
+    public const ACTION_CREATE = 'feedback.store';
 
     /**
      * Get statuses label of Feedback model
@@ -37,6 +40,19 @@ class FeedbackService
         return [
             self::STATUS_ACTIVE,
             self:: STATUS_DISABLED
+        ];
+    }
+
+    /**
+     * Get all actions
+     * @return array
+     */
+    public static function getActions(): array
+    {
+        return [
+            self::ACTION_UPDATE,
+            self::ACTION_DESTROY,
+            self::ACTION_CREATE
         ];
     }
 }

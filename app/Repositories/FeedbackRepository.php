@@ -15,6 +15,7 @@ use App\Models\Feedback as Model;
 class FeedbackRepository extends MainRepository
 {
     /**
+     * Get Model class name
      * @return mixed|string
      */
     protected function getModelClass()

@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Feedback;
+use App\Models\User;
+use App\Repositories\UserFeedbackLogRepository;
 use App\Services\FeedbackService;
 
 /**
@@ -20,7 +22,7 @@ class FeedbackObserver
      */
     public function created(Feedback $feedback)
     {
-        //
+        $this->setLog(FeedbackService::ACTION_CREATE);
     }
     /**
      * Handle the feedback "created" event.
@@ -30,8 +32,7 @@ class FeedbackObserver
      */
     public function creating(Feedback $feedback)
     {
-        $this->setHtml($feedback);
-        $this->setUser($feedback);
+//        $this->setHtml($feedback);
     }
 
     /**
@@ -40,8 +41,7 @@ class FeedbackObserver
      */
     public function updating(Feedback $feedback)
     {
-        $this->setHtml($feedback);
-        $this->setUser($feedback);
+//        $this->setHtml($feedback);
     }
 
     /**
@@ -52,7 +52,7 @@ class FeedbackObserver
      */
     public function updated(Feedback $feedback)
     {
-        //
+        $this->setLog(FeedbackService::ACTION_UPDATE);
     }
 
     /**
@@ -63,7 +63,7 @@ class FeedbackObserver
      */
     public function deleted(Feedback $feedback)
     {
-        //
+        $this->setLog(FeedbackService::ACTION_DESTROY);
     }
 
     /**
@@ -85,7 +85,7 @@ class FeedbackObserver
      */
     public function forceDeleted(Feedback $feedback)
     {
-        //
+        $this->setLog(FeedbackService::ACTION_DESTROY);
     }
 
     /**
@@ -94,16 +94,20 @@ class FeedbackObserver
      */
     private function setHtml(Feedback $feedback)
     {
-        if ($feedback->isDirty('text')) {
+        if ($feedback->isDirty('text') && false) {
             $feedback->text_html = $feedback->text;
         }
     }
     /**
-     * Set user id
-     * @param Feedback $feedback
+     * Set log about action of User
+     * @param string $feedbackAction
      */
-    private function setUser(Feedback $feedback)
+    private function setLog(string $feedbackAction)
     {
-        $feedback->user_id = auth()->id ?? FeedbackService::DEFAULT_USER;
+        /**@var User $user**/
+        $user = auth()->user();
+        $userId = $user->id ?? FeedbackService::DEFAULT_USER;
+        $log = new UserFeedbackLogRepository();
+        $log->addLog($userId,$feedbackAction);
     }
 }

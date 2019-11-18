@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PhoneRule;
 use App\Services\FeedbackService;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,11 +30,7 @@ class FeedbackAdminRequest extends FormRequest
             'name' => 'required|max:70|min:3',
             'phone' => [
                 'required',
-                function ($attribute, $value,$fault) {
-                    if (!preg_match('|^\+[0-9]+$|',$value)) {
-                        return false;
-                    }
-                },
+                new PhoneRule(),
                 'max:20',
                 'min:7'
             ],

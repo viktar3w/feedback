@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
 * Class User
+ * @package App\Models
+ *
+ * @property string id
  * @property string name
  * @property string email
  * @property string password
@@ -15,6 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string email_verified_at
  * @property string created_at
  * @property string updated_at
+ * @property UserFeedbackLog[] userFeedbackLogs
  */
 class User extends Authenticatable
 {
@@ -52,4 +56,11 @@ class User extends Authenticatable
      * @var string
      */
     protected $primaryKey = 'id';
+    /**
+     * The roles that belong to the user.
+     */
+    public function userFeedbackLogs()
+    {
+        return $this->belongsToMany(UserFeedbackLog::class);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\FeedbackAdminRequest;
 use App\Models\Feedback;
 use App\Http\Requests\FeedbackGuestRequest;
 use App\Repositories\FeedbackRepository;
+use App\Repositories\UserFeedbackLogRepository;
 use App\Services\FeedbackService;
 
 /**
@@ -115,6 +116,12 @@ class FeedbacksController extends Controller
      */
     public function destroy(int $id)
     {
-        dd(request()->all(),$id);
+        $result = Feedback::destroy($id);
+        if ($result) {
+            return back()
+                ->with('success',__('Feedback deleted'));
+        }
+        return back()
+            ->with('error',__("Feedback didn't delete"));
     }
 }

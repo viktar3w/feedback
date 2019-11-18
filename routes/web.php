@@ -25,9 +25,14 @@ Auth::routes([
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::post('feedbacks', 'Admin\FeedbacksController@store')
-    ->name('feedback.store');
+    ->name(\App\Services\FeedbackService::ACTION_CREATE);
 Route::get('feedbacks', function () {
     abort(404);
+});
+
+Route::group(['prefix' => 'digging_deeper'], function () {
+    Route::get('collections','DiggingDeeperController@collections')
+        ->name('digging_deeper.collections');
 });
 
 Route::group([
@@ -38,11 +43,11 @@ Route::group([
         ->name('feedback.index')
         ->middleware('auth');
     Route::delete('feedbacks/{id}', 'FeedbacksController@destroy')
-        ->name('feedback.destroy')
+        ->name(\App\Services\FeedbackService::ACTION_DESTROY)
         ->where(['id' => '[0-9]+'])
         ->middleware('auth');
     Route::post('feedbacks/{id}', 'FeedbacksController@update')
-        ->name('feedback.update')
+        ->name(\App\Services\FeedbackService::ACTION_UPDATE)
         ->where(['id' => '[0-9]+'])
         ->middleware('auth');
     Route::get('feedbacks/{id}', 'FeedbacksController@show')
