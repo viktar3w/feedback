@@ -56,11 +56,4 @@ class User extends Authenticatable
      * @var string
      */
     protected $primaryKey = 'id';
-    /**
-     * The roles that belong to the user.
-     */
-    public function userFeedbackLogs()
-    {
-        return $this->belongsToMany(UserFeedbackLog::class);
-    }
 }

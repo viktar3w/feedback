@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @property int id
  * @property int user_id
+ * @property int feedback_id
  * @property string action
  * @property string created_at
  * @property User user
+ * @property Feedback feedback
  */
 class UserFeedbackLog extends Model
 {
@@ -27,7 +29,7 @@ class UserFeedbackLog extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'action'
+        'user_id', 'action','feedback_id'
     ];
     /**
      * The primary key associated with the table.
@@ -42,5 +44,12 @@ class UserFeedbackLog extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    /**
+     * Get the Feedback
+     */
+    public function feedback()
+    {
+        return $this->belongsTo(Feedback::class);
     }
 }

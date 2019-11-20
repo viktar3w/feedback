@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string phone
  * @property string created_at
  * @property string updated_at
+ * @property UserFeedbackLog[] userFeedbackLogs
  */
 class Feedback extends Model
 {
@@ -33,4 +34,12 @@ class Feedback extends Model
      * @var string
      */
     protected $table = 'feedbacks';
+
+    /**
+     * Get all of the userFeedbackLogs.
+     */
+    public function userFeedbackLogs()
+    {
+        return $this->belongsToMany(User::class,'user_feedback_logs','feedback_id','user_id');
+    }
 }

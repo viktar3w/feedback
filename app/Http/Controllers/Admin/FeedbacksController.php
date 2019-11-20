@@ -61,7 +61,7 @@ class FeedbacksController extends Controller
      */
     public function show(int $id)
     {
-        $feedback = $this->feedbackRepository->getEdit($id);
+        $feedback = $this->feedbackRepository->getShow($id);
         if (!$feedback) {
             abort(404);
         }

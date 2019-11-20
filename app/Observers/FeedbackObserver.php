@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Feedback;
-use App\Models\User;
 use App\Repositories\UserFeedbackLogRepository;
 use App\Services\FeedbackService;
 
@@ -22,7 +21,7 @@ class FeedbackObserver
      */
     public function created(Feedback $feedback)
     {
-        $this->setLog(FeedbackService::ACTION_CREATE);
+        $this->setLog($feedback,FeedbackService::ACTION_CREATE);
     }
     /**
      * Handle the feedback "created" event.
@@ -52,7 +51,7 @@ class FeedbackObserver
      */
     public function updated(Feedback $feedback)
     {
-        $this->setLog(FeedbackService::ACTION_UPDATE);
+        $this->setLog($feedback,FeedbackService::ACTION_UPDATE);
     }
 
     /**
@@ -63,7 +62,7 @@ class FeedbackObserver
      */
     public function deleted(Feedback $feedback)
     {
-        $this->setLog(FeedbackService::ACTION_DESTROY);
+        $this->setLog($feedback,FeedbackService::ACTION_DESTROY);
     }
 
     /**
@@ -85,7 +84,7 @@ class FeedbackObserver
      */
     public function forceDeleted(Feedback $feedback)
     {
-        $this->setLog(FeedbackService::ACTION_DESTROY);
+        $this->setLog($feedback,FeedbackService::ACTION_DESTROY);
     }
 
     /**
@@ -100,14 +99,12 @@ class FeedbackObserver
     }
     /**
      * Set log about action of User
+     * @param Feedback $feedback
      * @param string $feedbackAction
      */
-    private function setLog(string $feedbackAction)
+    private function setLog(Feedback $feedback, string $feedbackAction)
     {
-        /**@var User $user**/
-        $user = auth()->user();
-        $userId = $user->id ?? FeedbackService::DEFAULT_USER;
         $log = new UserFeedbackLogRepository();
-        $log->addLog($userId,$feedbackAction);
+        $log->addLog($feedback,$feedbackAction);
     }
 }

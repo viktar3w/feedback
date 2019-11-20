@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Feedback as Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class FeedbackRepository
@@ -28,9 +29,22 @@ class FeedbackRepository extends MainRepository
      * @param int $id
      * @return Model|null
      */
-    public function getEdit(int $id): ?Model
+    public function getEdit(int $id)
     {
-        return $this->startCondition()->find($id);
+        return $this->startCondition()
+            ->find($id);
+    }
+
+    /**
+     * Get necessary Feedback
+     * @param int $id
+     * @return Model|null
+     */
+    public function getShow(int $id)
+    {
+        return $this->startCondition()
+            ->with('userFeedbackLogs')
+            ->find($id);
     }
 
     /**

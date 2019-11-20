@@ -17,6 +17,7 @@ class CreateUserFeedbackLogsTable extends Migration
         CREATE TABLE `user_feedback_logs` ( 
             `id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
             `user_id` Int( 10 ) UNSIGNED NOT NULL DEFAULT 0,
+	        `feedback_id` Int( 10 ) UNSIGNED NOT NULL,
             `action` VarChar( 70 ) NOT NULL,
             `created_at` DateTime NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY ( `id` ),
@@ -28,7 +29,7 @@ class CreateUserFeedbackLogsTable extends Migration
         ");
         \Illuminate\Support\Facades\DB::statement("
             
-        CREATE INDEX `Index_1` USING BTREE ON `user_feedback_logs`( `user_id` );
+        CREATE INDEX `index_feedback_id` USING BTREE ON `user_feedback_logs`( `feedback_id` );
         ");
     }
 
@@ -40,7 +41,7 @@ class CreateUserFeedbackLogsTable extends Migration
     public function down()
     {
         \Illuminate\Support\Facades\DB::statement('
-        DROP INDEX `Index_1` ON `user_feedback_logs`;
+        DROP INDEX `index_feedback_id` ON `user_feedback_logs`;
         ');
         \Illuminate\Support\Facades\DB::statement('
         DROP TABLE IF EXISTS `user_feedback_logs`;
