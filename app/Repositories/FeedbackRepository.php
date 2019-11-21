@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Feedback as Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class FeedbackRepository
@@ -43,7 +44,9 @@ class FeedbackRepository extends MainRepository
     public function getShow(int $id)
     {
         return $this->startCondition()
-            ->with('userFeedbackLogs')
+            ->with(['userFeedbackLogs' => function (HasMany $query) {
+                $query->with('user');
+            }])
             ->find($id);
     }
 

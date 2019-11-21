@@ -25,7 +25,7 @@ class PhoneRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (!preg_match('|^\+[0-9]+$|',$value)) {
+        if (!preg_match('|^\+?[0-9]+$|',$value)) {
             return false;
         }
         return true;

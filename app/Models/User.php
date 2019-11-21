@@ -56,4 +56,12 @@ class User extends Authenticatable
      * @var string
      */
     protected $primaryKey = 'id';
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function userFeedbackLogs()
+    {
+        return $this->hasMany(UserFeedbackLog::class);
+    }
 }

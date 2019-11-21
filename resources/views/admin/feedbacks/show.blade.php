@@ -33,46 +33,86 @@
             </div>
         </div>
         <div>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">
-                        {{__('Name')}}
-                    </th>
-                    <th scope="col">
-                        {{__('Email')}}
-                    </th>
-                    <th scope="col">
-                        {{__('Phone')}}
-                    </th>
-                    <th scope="col">
-                        {{__('Text')}}
-                    </th>
-                    <th scope="col">
-                        {{__('Status')}}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        {{$feedback->name}}
-                    </td>
-                    <td>
-                        {{$feedback->email}}
-                    </td>
-                    <td>
-                        {{$feedback->phone}}
-                    </td>
-                    <td>
-                        {{$feedback->text}}
-                    </td>
-                    <td>
-                        {{App\Services\FeedbackService::getStatusesLabel()[$feedback->status ?? 0] ?? ''}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-8">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                {{__('Name')}}
+                            </th>
+                            <th scope="col">
+                                {{__('Email')}}
+                            </th>
+                            <th scope="col">
+                                {{__('Phone')}}
+                            </th>
+                            <th scope="col">
+                                {{__('Text')}}
+                            </th>
+                            <th scope="col">
+                                {{__('Status')}}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                {{$feedback->name}}
+                            </td>
+                            <td>
+                                {{$feedback->email}}
+                            </td>
+                            <td>
+                                {{$feedback->phone}}
+                            </td>
+                            <td>
+                                {{$feedback->text}}
+                            </td>
+                            <td>
+                                {{App\Services\FeedbackService::getStatusesLabel()[$feedback->status ?? 0] ?? ''}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @if($feedback->userFeedbackLogs->isNotEmpty())
+                    <div class="col-4">
+                        <h3>{{__('Logs')}}</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">
+                                    {{__('User Name')}}
+                                </th>
+                                <th scope="col">
+                                    {{__('Action')}}
+                                </th>
+                                <th scope="col">
+                                    {{__('Date action')}}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($feedback->userFeedbackLogs as $log)
+                                <?php /**@var App\Models\UserFeedbackLog $log**/?>
+                                <tr>
+                                    <td>
+                                        {{$log->user->name}}
+                                    </td>
+                                    <td>
+                                        {{$log->action}}
+                                    </td>
+                                    <td>
+                                        {{$log->created_at}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
             <a href="{{route('feedback.edit',$feedback->id)}}">
                 {{__('edit')}}
             </a>

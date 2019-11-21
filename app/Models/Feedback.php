@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 /**
 * Class Feedback
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string phone
  * @property string created_at
  * @property string updated_at
- * @property UserFeedbackLog[] userFeedbackLogs
+ * @property Collection userFeedbackLogs
  */
 class Feedback extends Model
 {
@@ -40,6 +41,6 @@ class Feedback extends Model
      */
     public function userFeedbackLogs()
     {
-        return $this->belongsToMany(User::class,'user_feedback_logs','feedback_id','user_id');
+        return $this->hasMany(UserFeedbackLog::class);
     }
 }
