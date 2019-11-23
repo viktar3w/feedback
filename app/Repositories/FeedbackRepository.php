@@ -45,7 +45,7 @@ class FeedbackRepository extends MainRepository
     {
         return $this->startCondition()
             ->with(['userFeedbackLogs' => function (HasMany $query) {
-                $query->with('user');
+                $query->with('user')->orderBy('created_at','Desc');
             }])
             ->find($id);
     }
